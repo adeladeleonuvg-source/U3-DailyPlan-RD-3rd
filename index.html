@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio Montano - Reading Unit 3 Interactive Whiteboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background-color: #F2F5E9; }
+        .bg-montano-blue { background-color: #1269A8; }
+        .text-montano-blue { color: #1269A8; }
+        .bg-montano-yellow { background-color: #F7D615; }
+        .text-montano-yellow { color: #D4B40E; }
+        .bg-montano-teal { background-color: #54887D; }
+        .bg-montano-lightblue { background-color: #88B5C7; }
+        .bg-montano-olive { background-color: #A6B046; }
+        .bg-montano-bg { background-color: #F2F5E9; }
+    </style>
+</head>
+<body class="bg-montano-bg min-h-screen flex flex-col text-slate-800">
+
+    <!-- Top Header with School Logo, Title, and Fullscreen Button -->
+    <header class="bg-montano-blue text-white shadow-md p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyEop0yf6lZ7Jk9MILZxF1rBj4Oqs5esyhIQ&s" alt="Colegio Montano Logo" class="h-12 w-12 rounded-full object-cover bg-white p-1 shadow">
+            <div>
+                <h1 class="text-xl font-bold tracking-wide">Colegio Montano — Interactive Whiteboard</h1>
+                <p class="text-xs text-sky-200">Teacher: Nicole De León | Course: Reading | Grade: 3rd | Unit 3 (7 Weeks)</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <!-- Week Selector Dropdown -->
+            <select id="weekSelector" onchange="changeWeek(this.value)" class="bg-white text-slate-800 text-sm font-semibold px-3 py-2 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                <option value="1">Week 1 (May 20): What's for Lunch (SB 104-106)</option>
+                <option value="2">Week 2 (May 27): Special Food (WB 74-76)</option>
+                <option value="3">Week 3 (Jun 3): Extended Reading - The Gingerbread Man (SB 110-111)</option>
+                <option value="4">Week 4 (Jun 10): Gingerbread Man Post-Reading & Review</option>
+                <option value="5">Mid-Year Vacation (Jun 17 - Jun 24) [No Class]</option>
+                <option value="6">Week 5 (Jul 1): Take Care of Your Brain (SB 124-126)</option>
+                <option value="7">Week 6 (Jul 8): Do Animals Need Exercise? (WB 88-90)</option>
+                <option value="8">Week 7 (Jul 15 -> Aug 4): Unit 3 Synthesis & Assessment Presentation</option>
+            </select>
+
+            <!-- Fullscreen Button -->
+            <button onclick="toggleFullScreen()" class="bg-montano-yellow text-slate-900 font-bold px-4 py-2 rounded-lg shadow hover:bg-yellow-300 transition flex items-center gap-2 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                </svg>
+                Full Screen
+            </button>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs for the 4 Montano Didactic Moments -->
+    <nav class="bg-white shadow border-b border-slate-200 px-6 py-3 flex flex-wrap justify-center gap-3">
+        <button onclick="switchTab('intro')" id="btn-intro" class="tab-btn px-5 py-2 rounded-lg font-bold text-sm transition bg-montano-blue text-white shadow">
+            I) Introduction & Warm-Up (~5 min)
+        </button>
+        <button onclick="switchTab('individual')" id="btn-individual" class="tab-btn px-5 py-2 rounded-lg font-bold text-sm transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            II) Individual Practice (20 min)
+        </button>
+        <button onclick="switchTab('cooperative')" id="btn-cooperative" class="tab-btn px-5 py-2 rounded-lg font-bold text-sm transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            III) Cooperative Work (30 min)
+        </button>
+        <button onclick="switchTab('plenary')" id="btn-plenary" class="tab-btn px-5 py-2 rounded-lg font-bold text-sm transition bg-slate-100 text-slate-700 hover:bg-slate-200">
+            IV) Plenary & Assessment (15 min)
+        </button>
+    </nav>
+
+    <!-- Main Content Display Container -->
+    <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full grid grid-cols-1 gap-6">
+
+        <!-- CONTEXT CARD: Competency & Leader in Me Habit -->
+        <div class="bg-white rounded-xl shadow-md p-5 border-l-8 border-montano-teal flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <span id="currentWeekBadge" class="inline-block bg-teal-100 text-montano-teal text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Week 1 (May 20)</span>
+                <h2 id="sessionTitle" class="text-xl font-bold text-slate-900">What's for Lunch? (Student Book pages 104, 105, 106)</h2>
+                <p id="cnbCompetency" class="text-sm text-slate-600 mt-1"><strong>CNB Guatemala & Learning Goal:</strong> Express comprehension of informational texts about world foods, identifying main ideas and practicing vocabulary with proper pronunciation.</p>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 p-3 rounded-lg text-xs text-amber-900 min-w-[240px]">
+                <p class="font-bold flex items-center gap-1">🌟 Leader in Me Habit:</p>
+                <p id="habitText" class="mt-1 font-medium">Habit 3: Put First Things First (Prioritize tasks to read carefully and complete workbook activities on time).</p>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT PANELS -->
+
+        <!-- TAB I: INTRODUCTION & WARM-UP -->
+        <div id="tab-intro" class="tab-content space-y-6">
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-montano-blue">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-montano-blue flex items-center gap-2">
+                        🚀 Phase I: Introduction & Warm-Up (~5 mins)
+                    </h3>
+                    <span class="text-xs font-semibold bg-blue-100 text-montano-blue px-2.5 py-1 rounded">Brain Activation & Vocabulary</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <h4 class="font-bold text-slate-800 mb-2">1. Vocabulary Review (Units 1 & 2 + Unit 3 Preview)</h4>
+                        <p id="warmupVocab" class="text-sm text-slate-700 leading-relaxed">
+                            Teacher leads a quick flashcard review on screen: words related to food, places, and daily routines. Students chant words aloud in pairs (e.g., <em>cafeteria, soup, beans, rice, healthy, exercise</em>).
+                        </p>
+                    </div>
+                    <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
+                        <h4 class="font-bold text-sky-900 mb-2">2. Engaging Hook / Real-World Connection</h4>
+                        <p id="warmupHook" class="text-sm text-sky-800 leading-relaxed">
+                            Teacher asks: <em>"What did you eat for lunch today? Do children around the world eat the same things?"</em> Short popcorn sharing with the class.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Resources needed -->
+                <div class="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs text-slate-500">
+                    <strong>Materials:</strong> Digital projector, Student Book Our World 3, whiteboard markers.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB II: INDIVIDUAL PRACTICE -->
+        <div id="tab-individual" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-montano-yellow">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        ✍️ Phase II: Individual Practice (20 mins)
+                    </h3>
+                    <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2.5 py-1 rounded">Independent Production</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <h4 id="indTaskTitle" class="font-bold text-slate-800 mb-2">Reading & Comprehension Task (Student Book / Workbook)</h4>
+                        <p id="indTaskDesc" class="text-sm text-slate-700 mb-4">
+                            Students read the assigned pages independently and complete the True/False check and chart completion exercises in their books. Focus on finding text evidence without copying from peers.
+                        </p>
+
+                        <!-- Collapsible Solution / Answer Key Toggle -->
+                        <div class="mt-4">
+                            <button onclick="toggleSolution()" class="bg-montano-teal text-white text-xs font-bold px-4 py-2 rounded-lg shadow hover:bg-teal-700 transition flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                Toggle Teacher Answer Key / Solution Guide
+                            </button>
+                            <div id="solutionBox" class="hidden mt-3 bg-emerald-50 border border-emerald-200 p-4 rounded-lg text-xs text-emerald-900 space-y-2">
+                                <p class="font-bold">Answer Key Guidance for Teacher:</p>
+                                <div id="solutionContent" class="space-y-1">
+                                    <p>• True/False Answers: 1. False, 2. True, 3. True, 4. True, 5. True (based on text).</p>
+                                    <p>• Chart Completion: France (cafeteria, big lunch / fish, sausages, vegetables); Russia (soup, fish/meat, bread); Japan (classroom, soup, rice/noodles, fish); Brazil (rice, beans, salad, meat).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB III: COOPERATIVE WORK -->
+        <div id="tab-cooperative" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-montano-teal">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-montano-teal flex items-center gap-2">
+                        🤝 Phase III: Cooperative / Team Work (30 mins)
+                    </h3>
+                    <span class="text-xs font-semibold bg-teal-100 text-montano-teal px-2.5 py-1 rounded">Peer Interaction & Synergy</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-slate-800">Team Structure & Roles</h4>
+                        <p class="text-sm text-slate-700">
+                            Working in pairs or small groups of 3. Assign roles: <strong>Leader</strong> (keeps group on task), <strong>Reader</strong> (reads prompts), <strong>Recorder</strong> (writes down ideas).
+                        </p>
+                        <div class="bg-teal-50 p-3 rounded border border-teal-200 text-xs text-teal-900">
+                            <p class="font-bold">Leader in Me Connection — Habit 6: Sinergizar</p>
+                            <p class="mt-1">"Together is better." Teams collaborate to discuss questions, compare their answers, and prepare a joint mini-presentation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-sky-50 p-4 rounded-lg border border-sky-200 space-y-3">
+                        <h4 class="font-bold text-sky-900">Concrete Team Product</h4>
+                        <p id="coopTaskDesc" class="text-sm text-sky-800">
+                            Create a comparative chart or role-play dialogue (e.g., discussing favorite meals with a partner just like in SB page 105, activity 4).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB IV: PLENARY & ASSESSMENT -->
+        <div id="tab-plenary" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-montano-blue">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-montano-blue flex items-center gap-2">
+                        🎯 Phase IV: Plenary, Interactive Quiz & Home Extension (15 mins)
+                    </h3>
+                    <span class="text-xs font-semibold bg-blue-100 text-montano-blue px-2.5 py-1 rounded">Closure & Evaluation</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Plenary & Game -->
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 mb-2">Interactive Trivia / Pasapalabra Mini-Game</h4>
+                            <p class="text-sm text-slate-700 mb-3">Teacher launches a quick digital vocabulary & reading trivia based on the lesson. Teams raise hands to answer for bonus points.</p>
+                            <div class="bg-amber-100 p-3 rounded text-xs font-semibold text-amber-900">
+                                💡 <em>Sample Question:</em> "Where do children in Japan usually eat lunch?" -> Answer: "In the classroom!"
+                            </div>
+                        </div>
+
+                        <!-- Take Home Activity / Investigation -->
+                        <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-200">
+                            <h4 class="font-bold text-indigo-900 mb-1">🏡 Take-Home Investigation Activity</h4>
+                            <p id="homeTask" class="text-xs text-indigo-800 leading-relaxed">
+                                Interview a family member at home: <em>"What was your favorite lunch when you were 8 years old?"</em> Bring 3 bullet points of notes to share next class.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Evaluation Rubric / Checklist -->
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-2">📋 Plenary Checklist & Rubric (Live Assessment)</h4>
+                            <p class="text-xs text-slate-600 mb-3">Click checkboxes to evaluate team participation and mastery during the plenary:</p>
+                            
+                            <div class="space-y-2 text-xs">
+                                <label class="flex items-center gap-2 bg-white p-2 rounded shadow-sm border border-slate-200 cursor-pointer">
+                                    <input type="checkbox" class="rounded text-montano-blue focus:ring-montano-blue">
+                                    <span><strong>1. Topic Mastery & Clarity:</strong> Explains answers clearly and correctly.</span>
+                                </label>
+                                <label class="flex items-center gap-2 bg-white p-2 rounded shadow-sm border border-slate-200 cursor-pointer">
+                                    <input type="checkbox" class="rounded text-montano-blue focus:ring-montano-blue">
+                                    <span><strong>2. Logic & Procedure:</strong> Follows logical text-based reasoning.</span>
+                                </label>
+                                <label class="flex items-center gap-2 bg-white p-2 rounded shadow-sm border border-slate-200 cursor-pointer">
+                                    <input type="checkbox" class="rounded text-montano-blue focus:ring-montano-blue">
+                                    <span><strong>3. Collaborative Teamwork:</strong> Equitable participation and mutual respect.</span>
+                                </label>
+                                <label class="flex items-center gap-2 bg-white p-2 rounded shadow-sm border border-slate-200 cursor-pointer">
+                                    <input type="checkbox" class="rounded text-montano-blue focus:ring-montano-blue">
+                                    <span><strong>4. Plenary Responsiveness:</strong> Responds accurately to teacher/peer questions.</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Scale: Needs Support (1-2) | Proficient (3-4)</span>
+                            <button onclick="resetChecklist()" class="text-red-600 font-semibold hover:underline">Reset Checklist</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500 mt-auto">
+        Colegio Montano &copy; 2026 | Educational Interactive Canvas System | CNB Guatemala Aligned
+    </footer>
+
+    <!-- JavaScript for Interactivity and Week Data -->
+    <script>
+        // Week data dictionary for Unit 3 Reading (7 weeks total, May 20 to August 4)
+        const weekData = {
+            1: {
+                badge: "Week 1 (May 20)",
+                title: "What's for Lunch? (Student Book pages 104, 105, 106)",
+                competency: "Express comprehension of informational texts about world foods, identifying main ideas and practicing vocabulary with proper pronunciation.",
+                habit: "Habit 3: Put First Things First (Prioritize tasks to read carefully and complete workbook activities on time).",
+                vocab: "Teacher leads a quick flashcard review on screen: words related to food, places, and daily routines. Students chant words aloud in pairs (cafeteria, soup, beans, rice, healthy, exercise).",
+                hook: "Teacher asks: 'What did you eat for lunch today? Do children around the world eat the same things?' Short popcorn sharing with the class.",
+                indTaskTitle: "Reading & Comprehension Task (Student Book pages 104-105)",
+                indTaskDesc: "Students read pages 104-105 independently. Complete exercise 2 (True/False check) and exercise 3 (Chart completion about countries and foods).",
+                solution: "• True/False: 1. False, 2. True, 3. True, 4. True, 5. True.<br>• Chart: France (cafeteria, big lunch / fish, sausages, vegetables); Russia (soup, fish/meat, bread); Japan (classroom, soup, rice/noodles, fish); Brazil (rice, beans, salad, meat).",
+                coopDesc: "Work with a partner. Practice the dialogue in Exercise 4: 'I have cereal for breakfast. — I do, too!' Discuss what your partner eats for lunch.",
+                home: "Interview a family member at home: 'What was your favorite lunch when you were 8 years old?' Bring 3 bullet points of notes to share next class."
+            },
+            2: {
+                badge: "Week 2 (May 27)",
+                title: "Special Food & Values (Workbook pages 74, 75, 76)",
+                competency: "Analyze paragraphs, identify topic sentences and body sentences, and discuss healthy eating habits.",
+                habit: "Habit 1: Be Proactive (Take responsibility for choosing healthy foods and caring for your body).",
+                vocab: "Review Unit 1 & 2 vocabulary plus food adjectives (delicious, sweet, salty, healthy, favorite).",
+                hook: "Show image of giraffes eating leaves (SB p. 107). Ask: 'Why is it important to eat good food like giraffes do?'",
+                indTaskTitle: "Writing Practice: My Favorite Meal (Workbook pages 74-75)",
+                indTaskDesc: "Students write a paragraph about their favorite meal, identifying the topic sentence and body sentences as shown on SB page 106.",
+                solution: "• Check that paragraph starts with a clear topic sentence ('I have one favorite meal...').<br>• Body sentences must describe ingredients, taste, and why they like it.",
+                coopDesc: "Work in a small group (Think. Pair. Share). Discuss why it is important to eat good food and why we should read labels on boxes and cans.",
+                home: "Look at food packages or cans in your pantry at home. Write down 1 ingredient you find and bring it to class."
+            },
+            3: {
+                badge: "Week 3 (Jun 3)",
+                title: "Extended Reading: The Gingerbread Man (Student Book pages 110, 111)",
+                competency: "Read and comprehend a traditional story, matching characters to actions and determining true/false story events.",
+                habit: "Habit 2: Begin with the End in Mind (Have a clear goal of understanding the sequence of events in the story).",
+                vocab: "Review action verbs and story characters (Grandma, fox, coyote, turtle, run, jump, hungry, river).",
+                hook: "Teacher holds up a picture of a cookie man and asks: 'What happens when someone bakes a cookie that can run away?'",
+                indTaskTitle: "Story Reading & Matching (SB pages 110-111)",
+                indTaskDesc: "Read 'The Gingerbread Man'. Complete Exercise 2 (Read and match characters to their actions) and Exercise 3 (True/False check).",
+                solution: "• Match: Grandma -> makes a gingerbread man; fox -> is hungry / runs after the gingerbread man; coyote -> is hungry; turtle -> takes the gingerbread man across the river.<br>• T/F: 1. True, 2. False, 3. True.",
+                coopDesc: "Express Yourself (Exercise 4): Choose an activity in small groups: a) Write what happens next, b) Make masks for a play, or c) Bake your own gingerbread man.",
+                home: "Research another traditional children's story from Guatemala or around the world and write down its main character."
+            },
+            4: {
+                badge: "Week 4 (Jun 10)",
+                title: "Gingerbread Man Post-Reading & Unit Review",
+                competency: "Synthesize narrative elements and reinforce vocabulary and grammar structures from the first half of Unit 3.",
+                habit: "Habit 5: Seek First to Understand, Then to Be Understood (Listen actively when classmates share story interpretations).",
+                vocab: "Vocabulary review game covering all Unit 3 words learned so far (food, animals, characters, actions).",
+                hook: "Quick role-play preview: Two students act out a conversation between the Gingerbread Man and the Fox.",
+                indTaskTitle: "Comprehension & Vocabulary Review Worksheet",
+                indTaskDesc: "Complete review exercises connecting the reading texts 'What's for Lunch?' and 'The Gingerbread Man'.",
+                solution: "• Teacher checks individual worksheets for correct spelling and narrative sequencing.<br>• Ensure all students have completed corrections.",
+                coopDesc: "Team Quiz Challenge: Groups compete in answering trivia questions about food and the Gingerbread Man story.",
+                home: "Prepare a 1-minute fun fact about your favorite story character to share after vacation."
+            },
+            5: {
+                badge: "Mid-Year Vacation (Jun 17 - Jun 24)",
+                title: "Mid-Year Vacation [No Class]",
+                competency: "Rest and enjoy family time while applying Montano habits in daily life.",
+                habit: "Habit 7: Sharpen the Saw (Balance physical, mental, and emotional energy during vacation).",
+                vocab: "Rest & Recharge.",
+                hook: "Enjoy your well-deserved mid-year break!",
+                indTaskTitle: "No Assignment during Vacation",
+                indTaskDesc: "Rest and recharge for the second half of the semester.",
+                solution: "• Rest well!",
+                coopDesc: "Spend quality time with family.",
+                home: "Rest and stay safe!"
+            },
+            6: {
+                badge: "Week 5 (Jul 1)",
+                title: "Take Care of Your Brain (Student Book pages 124, 125, 126)",
+                competency: "Analyze informational text regarding physical exercise, brain health, and outdoor activities.",
+                habit: "Habit 7: Sharpen the Saw (Understand the importance of exercising our body and mind).",
+                vocab: "Review health and fitness vocabulary (exercise, brain, outdoor, forest bath, laugh, blood, strong).",
+                hook: "Lead the class in 30 seconds of jumping jacks and deep breaths. Ask: 'How does your brain feel right now?'",
+                indTaskTitle: "Reading & Underlining (SB pages 124-125)",
+                indTaskDesc: "Read pages 124-125. Complete Exercise 2 (Read and underline correct options) and Exercise 3 (Write why exercise is good for your body and brain).",
+                solution: "• Underline answers: 1. good, 2. minutes, 3. outdoors, 4. laugh, 5. exercise.<br>• Exercise 3 answers: Body gets stronger, brain thinks faster and smarter, more blood flow.",
+                coopDesc: "Ask and answer with a partner (Exercise 4): 'Do you like to exercise? What do you like to do?' Share favorite outdoor sports.",
+                home: "Ask a parent: 'What is your favorite way to exercise or stay healthy?' Bring their answer to class."
+            },
+            7: {
+                badge: "Week 6 (Jul 8)",
+                title: "Do Animals Need Exercise? (Workbook pages 88, 89, 90)",
+                competency: "Compare human and animal exercise needs through writing and structured worksheets.",
+                habit: "Habit 3: Put First Things First (Prioritize physical health and daily physical activity).",
+                vocab: "Review animal and exercise vocabulary (climb, swim, run, jump, fit, strong, muscles).",
+                hook: "Show image of a child rock climbing (SB p. 127). Ask: 'Would you like to try rock climbing? Why?'",
+                indTaskTitle: "Workbook Exercises (Pages 88-90)",
+                indTaskDesc: "Complete workbook activities on exercise, writing why animals and people need to stay fit and active.",
+                solution: "• Review workbook answers for correct use of 'because' to explain reasons.<br>• Example: 'I like swimming because it exercises my whole body.'",
+                coopDesc: "Work in small groups: Create a mini-poster illustrating one animal that exercises (like giraffes or monkeys) and present it.",
+                home: "Research one animal in Guatemala and how it moves or exercises in nature."
+            },
+            8: {
+                badge: "Week 7 (Jul 15 -> Aug 4)",
+                title: "Unit 3 Synthesis & Assessment Presentation",
+                competency: "Synthesize all Unit 3 learning outcomes through collaborative presentations and peer evaluation.",
+                habit: "Habit 4: Think Win-Win (Celebrate team success and support classmates during presentations).",
+                vocab: "Comprehensive review of all Unit 3 vocabulary (food, nutrition, stories, exercise, brain health).",
+                hook: "Motivational shoutout celebrating the completion of Unit 3 learning journey.",
+                indTaskTitle: "Unit 3 Final Portfolio & Self-Evaluation",
+                indTaskDesc: "Students review their workbook pages (Units 3 & related) and complete their final self-reflection checklist.",
+                solution: "• Teacher reviews completed portfolios and grades team presentation rubrics.",
+                coopDesc: "Final Plenary Showcase: Teams present their food charts, gingerbread stories, or exercise posters to the class.",
+                home: "Tell a family member 3 new things you learned about food and brain health in Unit 3!"
+            }
+        };
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-montano-blue', 'text-white', 'shadow');
+                btn.classList.add('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('bg-slate-100', 'text-slate-700', 'hover:bg-slate-200');
+            activeBtn.classList.add('bg-montano-blue', 'text-white', 'shadow');
+        }
+
+        // Change Week Logic
+        function changeWeek(weekNum) {
+            const data = weekData[weekNum];
+            document.getElementById('currentWeekBadge').innerText = data.badge;
+            document.getElementById('sessionTitle').innerText = data.title;
+            document.getElementById('cnbCompetency').innerHTML = `<strong>CNB Guatemala & Learning Goal:</strong> ${data.competency}`;
+            document.getElementById('habitText').innerText = data.habit;
+            document.getElementById('warmupVocab').innerHTML = data.vocab;
+            document.getElementById('warmupHook').innerHTML = data.hook;
+            document.getElementById('indTaskTitle').innerText = data.indTaskTitle;
+            document.getElementById('indTaskDesc').innerText = data.indTaskDesc;
+            document.getElementById('solutionContent').innerHTML = data.solution;
+            document.getElementById('coopTaskDesc').innerText = data.coopDesc;
+            document.getElementById('homeTask').innerHTML = data.home;
+
+            // Hide solution box on week change
+            document.getElementById('solutionBox').classList.add('hidden');
+        }
+
+        // Toggle Teacher Solution Box
+        function toggleSolution() {
+            const box = document.getElementById('solutionBox');
+            box.classList.toggle('hidden');
+        }
+
+        // Reset Checklist
+        function resetChecklist() {
+            document.querySelectorAll('#tab-plenary input[type="checkbox"]').forEach(cb => cb.checked = false);
+        }
+
+        // Fullscreen Toggle
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
